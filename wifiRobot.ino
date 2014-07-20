@@ -1,5 +1,4 @@
 int servo1=2,servo2=4;
-int pulsewidth;//�����������
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
@@ -8,39 +7,35 @@ int myServo1Angle = 90, myServo2Angle = 60;
 int myServo1Inc = 5, myServo2Inc = 20;
 boolean scan = false, fengmingqi=false;
 
-void servo(int servopin,int myangle)//����һ�����庯��
+void servo(int servopin,int myangle)//servo run
 {
-    pulsewidth=(myangle*11)+500;//���Ƕ�ת��Ϊ500-2480������ֵ
-    digitalWrite(servopin,HIGH);//�����ӿڵ�ƽ����
-    delayMicroseconds(pulsewidth);//��ʱ����ֵ��΢����
-    digitalWrite(servopin,LOW);//�����ӿڵ�ƽ����
+    int pulsewidth=(myangle*11)+500;
+    digitalWrite(servopin,HIGH);
+    delayMicroseconds(pulsewidth);
+    digitalWrite(servopin,LOW);
     delay(20-pulsewidth/1000);
 }
-void setMotor(int MOTORA,int MOTORB)
+void setMotor(int MOTORA,int MOTORB)//motor run
 {
-  if(MOTORA>=0)  //�жϷ��򣬴���0��ʾ����
+  if(MOTORA>=0)
   {
-    digitalWrite(AIN2,HIGH);  //AIN2����ø�
-    analogWrite(AIN1,255-MOTORA);//AIN1����PWM�ź� 
-       // PWM�Ǹߵ�ƽ��ռ�ձȣ�������Ҫȡ��������255��MOTORA
+    digitalWrite(AIN2,HIGH);
+    analogWrite(AIN1,255-MOTORA);
   }
-  else            //�жϷ���С��0��ʾ����            
+  else           
   {
    digitalWrite(AIN1,HIGH);  
-    analogWrite(AIN2,MOTORA+255);  //PWM�Ǹߵ�ƽ��ռ�ձ�
-          //������Ҫȡ������ʱMOTORAΪ��ֵ������MOTORA+255
+    analogWrite(AIN2,MOTORA+255);
   }
-  if(MOTORB>=0)    //�жϷ��򣬴���0��ʾ����
+  if(MOTORB>=0)
   {
-    digitalWrite(BIN2,HIGH);   //BIN2����ø�
-    analogWrite(BIN1,255-MOTORB);  //BIN1����PWM�ź�
-        // PWM�Ǹߵ�ƽ��ռ�ձȣ�������Ҫȡ��������255��MOTORB
+    digitalWrite(BIN2,HIGH);
+    analogWrite(BIN1,255-MOTORB);
   }
-  else     //�жϷ���С��0��ʾ����
+  else
   {
     digitalWrite(BIN1,HIGH);  
-    analogWrite(BIN2,255+MOTORB); //PWM�Ǹߵ�ƽ��ռ�ձ�
-        //������Ҫȡ������ʱMOTORBΪ��ֵ������MOTORB+255
+    analogWrite(BIN2,255+MOTORB);
   }
 }
 
@@ -101,7 +96,7 @@ void motorCmd(unsigned long command){
        else
          noTone(12);
       break;
-      case 0x001000:
+      case 0x001000://music
         int melody[]={330,330,330,262,330,392,196};
         int noteDurations[]={8,4,4,8,4,2,2};
         for(int thisNote=0;thisNote< 7;thisNote++) {
@@ -111,7 +106,6 @@ void motorCmd(unsigned long command){
           delay(pauseBetweenNotes);
           noTone(12); 
          }
-        
     }
 } 
 void setup(){
