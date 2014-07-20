@@ -1,46 +1,46 @@
 int servo1=2,servo2=4;
-int pulsewidth;//¶¨ÒåÂö¿í±äÁ¿
+int pulsewidth;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
 int BIN2 = 9;  //DIRB
 int myServo1Angle = 90, myServo2Angle = 60;
 int myServo1Inc = 5, myServo2Inc = 20;
-boolean scan = false,fengmingqi=false;
+boolean scan = false, fengmingqi=false;
 
-void servo(int servopin,int myangle)//¶¨ÒåÒ»¸öÂö³åº¯Êý
+void servo(int servopin,int myangle)//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½åº¯ï¿½ï¿½
 {
-    pulsewidth=(myangle*11)+500;//½«½Ç¶È×ª»¯Îª500-2480µÄÂö¿íÖµ
-    digitalWrite(servopin,HIGH);//½«¶æ»ú½Ó¿ÚµçÆ½ÖÁ¸ß
-    delayMicroseconds(pulsewidth);//ÑÓÊ±Âö¿íÖµµÄÎ¢ÃëÊý
-    digitalWrite(servopin,LOW);//½«¶æ»ú½Ó¿ÚµçÆ½ÖÁµÍ
+    pulsewidth=(myangle*11)+500;//ï¿½ï¿½ï¿½Ç¶ï¿½×ªï¿½ï¿½Îª500-2480ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    digitalWrite(servopin,HIGH);//ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Úµï¿½Æ½ï¿½ï¿½ï¿½ï¿½
+    delayMicroseconds(pulsewidth);//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Î¢ï¿½ï¿½ï¿½ï¿½
+    digitalWrite(servopin,LOW);//ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Úµï¿½Æ½ï¿½ï¿½ï¿½ï¿½
     delay(20-pulsewidth/1000);
 }
 void setMotor(int MOTORA,int MOTORB)
 {
-  if(MOTORA>=0)  //ÅÐ¶Ï·½Ïò£¬´óÓÚ0±íÊ¾ÕýÏò
+  if(MOTORA>=0)  //ï¿½Ð¶Ï·ï¿½ï¿½ò£¬´ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
   {
-    digitalWrite(AIN2,HIGH);  //AIN2Òý½ÅÖÃ¸ß
-    analogWrite(AIN1,255-MOTORA);//AIN1ÊäÈëPWMÐÅºÅ 
-       // PWMÊÇ¸ßµçÆ½µÄÕ¼¿Õ±È£¬ÕâÀïÐèÒªÈ¡·´£¬ËùÒÔ255£­MOTORA
+    digitalWrite(AIN2,HIGH);  //AIN2ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½
+    analogWrite(AIN1,255-MOTORA);//AIN1ï¿½ï¿½ï¿½ï¿½PWMï¿½Åºï¿½ 
+       // PWMï¿½Ç¸ßµï¿½Æ½ï¿½ï¿½Õ¼ï¿½Õ±È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½255ï¿½ï¿½MOTORA
   }
-  else            //ÅÐ¶Ï·½Ïò£¬Ð¡ÓÚ0±íÊ¾·´Ïò            
+  else            //ï¿½Ð¶Ï·ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½            
   {
    digitalWrite(AIN1,HIGH);  
-    analogWrite(AIN2,MOTORA+255);  //PWMÊÇ¸ßµçÆ½µÄÕ¼¿Õ±È
-          //ÕâÀïÐèÒªÈ¡·´£¬ÕâÊ±MOTORAÎª¸ºÖµ£¬ËùÒÔMOTORA+255
+    analogWrite(AIN2,MOTORA+255);  //PWMï¿½Ç¸ßµï¿½Æ½ï¿½ï¿½Õ¼ï¿½Õ±ï¿½
+          //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±MOTORAÎªï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MOTORA+255
   }
-  if(MOTORB>=0)    //ÅÐ¶Ï·½Ïò£¬´óÓÚ0±íÊ¾ÕýÏò
+  if(MOTORB>=0)    //ï¿½Ð¶Ï·ï¿½ï¿½ò£¬´ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
   {
-    digitalWrite(BIN2,HIGH);   //BIN2Òý½ÅÖÃ¸ß
-    analogWrite(BIN1,255-MOTORB);  //BIN1ÊäÈëPWMÐÅºÅ
-        // PWMÊÇ¸ßµçÆ½µÄÕ¼¿Õ±È£¬ÕâÀïÐèÒªÈ¡·´£¬ËùÒÔ255£­MOTORB
+    digitalWrite(BIN2,HIGH);   //BIN2ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½
+    analogWrite(BIN1,255-MOTORB);  //BIN1ï¿½ï¿½ï¿½ï¿½PWMï¿½Åºï¿½
+        // PWMï¿½Ç¸ßµï¿½Æ½ï¿½ï¿½Õ¼ï¿½Õ±È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½255ï¿½ï¿½MOTORB
   }
-  else     //ÅÐ¶Ï·½Ïò£¬Ð¡ÓÚ0±íÊ¾·´Ïò
+  else     //ï¿½Ð¶Ï·ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
   {
     digitalWrite(BIN1,HIGH);  
-    analogWrite(BIN2,255+MOTORB); //PWMÊÇ¸ßµçÆ½µÄÕ¼¿Õ±È
-        //ÕâÀïÐèÒªÈ¡·´£¬ÕâÊ±MOTORBÎª¸ºÖµ£¬ËùÒÔMOTORB+255
+    analogWrite(BIN2,255+MOTORB); //PWMï¿½Ç¸ßµï¿½Æ½ï¿½ï¿½Õ¼ï¿½Õ±ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±MOTORBÎªï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MOTORB+255
   }
 }
 
@@ -48,12 +48,12 @@ void setMotor(int MOTORA,int MOTORB)
 void motorCmd(unsigned long command){
   int angle;
   
-  if( (command & 0xFFFF00) == 0x010700 || (command & 0xFFFF00) == 0x010100) {
+  if( (command & 0xFFFF00) == 0x010700 || (command & 0xFFFF00) == 0x010100) {//Horizental adjustment
     angle = command & 0xFF;
     servo(servo1,  angle);  
     return;
   }
-  if( (command & 0xFFFF00) == 0x010800 || (command & 0xFFFF00) == 0x010400) {
+  if( (command & 0xFFFF00) == 0x010800 || (command & 0xFFFF00) == 0x010400) {//Vertical adjustment
     angle = command & 0xFF;
     servo(servo2,  angle / 2);  
     return;
