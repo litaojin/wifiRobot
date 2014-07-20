@@ -1,4 +1,4 @@
-int servo1=2,servo2=4;
+int servo1=2,servo2=4; // Servo pin
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
