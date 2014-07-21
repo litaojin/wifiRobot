@@ -3,9 +3,9 @@ int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
 int BIN2 = 9;  //DIRB
-int myServo1Angle = 90, myServo2Angle = 60;
-int myServo1Inc = 5, myServo2Inc = 20;
-boolean scan = false, fengmingqi=false;
+int myServo1Angle = 90, myServo2Angle = 60; // Initial camera position
+int myServo1Inc = 5, myServo2Inc = 20; // Camera scan angle increment
+boolean scan = false, fengmingqi = false;
 
 void servo(int servopin,int myangle)//servo run
 {
