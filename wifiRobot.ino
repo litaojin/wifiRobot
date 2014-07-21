@@ -50,7 +50,7 @@ void motorCmd(unsigned long command){
   }
   if( (command & 0xFFFF00) == 0x010800 || (command & 0xFFFF00) == 0x010400) {//Vertical adjustment
     angle = command & 0xFF;
-    servo(servo2,  angle / 2);  
+    servo(servo2, angle/2);  
     return;
   }
     
