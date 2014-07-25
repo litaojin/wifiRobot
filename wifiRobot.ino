@@ -1,4 +1,5 @@
 int servo1=2,servo2=4; // Servo pin
+int led1=8,led2=11;//LED pin
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
@@ -110,8 +111,13 @@ void motorCmd(unsigned long command){
 } 
 void setup(){
   Serial.begin(9600);
+  //pinMode Servo
   pinMode (servo1,OUTPUT);
   pinMode(servo2,OUTPUT);
+  //pinMode LED
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  //pinMode Motor
   pinMode(AIN1,OUTPUT);
   pinMode(AIN2,OUTPUT);
   pinMode(BIN1,OUTPUT);
@@ -136,6 +142,14 @@ void loop(){
         motorCmd(command);
       }
     }
+  }
+  if(analogRead(A7)>1000){
+    digitalWrite(led1,HIGH);
+    digitalWrite(led2,HIGH);
+  }
+  else{
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
   }
   if( scan == true ){
     if(myServo1Angle > 170 || myServo1Angle < 10 ){
