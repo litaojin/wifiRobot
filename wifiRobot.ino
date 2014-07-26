@@ -1,12 +1,13 @@
 int servo1=2,servo2=4; // Servo pin
 int led1=8,led2=11;//LED pin
+int Trig=13,Echo=3;//Ultrasonic pin
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
 int BIN2 = 9;  //DIRB
 int myServo1Angle = 90, myServo2Angle = 60; // Initial camera position
 int myServo1Inc = 5, myServo2Inc = 20; // Camera scan angle increment
-boolean scan = false, fengmingqi = false;
+boolean scan = false, fengmingqi = false, Back=false;
 
 void servo(int servopin,int myangle)//servo run
 {
@@ -65,26 +66,34 @@ void motorCmd(unsigned long command){
       scan = false; break;      
     case 0x000200:
       setMotor(150,150);
+      Back=false;
        break;
     case 0x000100:
       setMotor(-150,-150);
+      Back=true;
       break;
     case 0x000300:
+      Back=false;
       setMotor(-170,170);
       break;
     case 0x000400:
       setMotor(170,-170);
+      Back=false;
       break;
      case 0x000500:
       setMotor(100,170);
+      Back=false;
        break;
     case 0x000600:
       setMotor(170,100);
+      Back=false;
       break;
     case 0x000700:
       setMotor(-100,-170);
+      Back=true;
       break;
     case 0x000800:
+      Back=true;
       setMotor(-170,-100);
       break;
     case 0x000000:
@@ -117,6 +126,9 @@ void setup(){
   //pinMode LED
   pinMode(led1,OUTPUT);
   pinMode(led2,OUTPUT);
+  //pinMode Ultrasonic sensor
+  pinMode(Trig,OUTPUT);
+  pinMode(Echo,INPUT);
   //pinMode Motor
   pinMode(AIN1,OUTPUT);
   pinMode(AIN2,OUTPUT);
@@ -143,14 +155,23 @@ void loop(){
       }
     }
   }
-  if(analogRead(A7)>1000){
+  if(analogRead(A7)>1000){//Turn on LED
     digitalWrite(led1,HIGH);
     digitalWrite(led2,HIGH);
   }
-  else{
+  else{//Turn off LED
     digitalWrite(led1,LOW);
     digitalWrite(led2,LOW);
   }
+  digitalWrite(Trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(Trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(Trig,LOW);
+  double distance=pulseIn(Echo,HIGH)/58.00;
+  if(distance<=10)
+    if(Back)
+      setMotor(0,0);//stop
   if( scan == true ){
     if(myServo1Angle > 170 || myServo1Angle < 10 ){
       myServo1Inc = -myServo1Inc;
