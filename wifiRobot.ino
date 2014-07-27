@@ -7,7 +7,7 @@ int BIN1 = 10;  //PWMB
 int BIN2 = 9;  //DIRB
 int myServo1Angle = 90, myServo2Angle = 60; // Initial camera position
 int myServo1Inc = 5, myServo2Inc = 20; // Camera scan angle increment
-boolean scan = false, fengmingqi = false, Back=false;
+boolean scan = false, fengmingqi = false, Back=false, Buzzer=false;
 
 void servo(int servopin,int myangle)//servo run
 {
@@ -169,9 +169,16 @@ void loop(){
   delayMicroseconds(10);
   digitalWrite(Trig,LOW);
   double distance=pulseIn(Echo,HIGH)/58.00;
+  if(Back==false)
+    Buzzer=false;
   if(distance<=10)
-    if(Back)
+    if(Back){
       setMotor(0,0);//stop
+      if(Buzzer==false){
+        tone(12,500,1000);
+        Buzzer=true;
+      }
+    }
   if( scan == true ){
     if(myServo1Angle > 170 || myServo1Angle < 10 ){
       myServo1Inc = -myServo1Inc;
