@@ -1,13 +1,14 @@
 int servo1=2,servo2=4; // Servo pin
 int led1=8,led2=11;//LED pin
 int Trig=A2,Echo=A3;//Ultrasonic pin
+int IR=7;//IR pin
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
 int BIN2 = 9;  //DIRB
 int myServo1Angle = 90, myServo2Angle = 60; // Initial camera position
 int myServo1Inc = 5, myServo2Inc = 20; // Camera scan angle increment
-boolean scan = false, fengmingqi = false, Back=false, Buzzer=false;
+boolean scan = false, fengmingqi = false, Back=false, Buzzer=false, Buzzer2=false;
 void servo(int servopin,int myangle)//servo run
 {
     int pulsewidth=(myangle*11)+500;
@@ -108,10 +109,10 @@ void motorCmd(unsigned long command){
       case 0x001000://music
         int melody[]={330,330,330,262,330,392,196};
         int noteDurations[]={8,4,4,8,4,2,2};
-        for(int thisNote=0;thisNote< 7;thisNote++) {
-          int noteDuration= 1000/noteDurations[thisNote];
+        for(int thisNote = 0;thisNote< 7;thisNote++) {
+          int noteDuration = 1000/noteDurations[thisNote];
           tone(12, melody[thisNote],noteDuration);
-          int pauseBetweenNotes= noteDuration*1.30;
+          int pauseBetweenNotes = noteDuration*1.30;
           delay(pauseBetweenNotes);
           noTone(12); 
          }
@@ -128,6 +129,8 @@ void setup(){
   //pinMode Ultrasonic sensor
   pinMode(Trig,OUTPUT);
   pinMode(Echo,INPUT);
+  //pinMode IR
+  pinMode(IR,INPUT);
   //pinMode Motor
   pinMode(AIN1,OUTPUT);
   pinMode(AIN2,OUTPUT);
@@ -135,8 +138,9 @@ void setup(){
   pinMode(BIN2,OUTPUT);
   setMotor(0,0);
   for(int i=0;i<=50;i++){
-  servo(servo1, 90);
-  servo(servo2, 70);}
+    servo(servo1, 90);
+    servo(servo2, 70);
+  }
 }
 
 void loop(){
@@ -178,6 +182,15 @@ void loop(){
         Buzzer=true;
       }
     }
+    if(Back)
+      Buzzer2=false;
+    if(digitalRead(IR)==LOW)
+      if(Back==false){
+        if(Buzzer2==false){
+          tone(12,500,1000);
+          Buzzer2=true;
+        }
+      }
   if( scan == true ){
     if(myServo1Angle > 170 || myServo1Angle < 10 ){
       myServo1Inc = -myServo1Inc;
