@@ -1,6 +1,6 @@
 int servo1=2,servo2=4; // Servo pin
 int led1=8,led2=11;//LED pin
-int Trig=13,Echo=3;//Ultrasonic pin
+int Trig=A2,Echo=A3;//Ultrasonic pin
 int AIN1 = 6;  //PWMA
 int AIN2 = 5;  //DIRA
 int BIN1 = 10;  //PWMB             
@@ -8,7 +8,6 @@ int BIN2 = 9;  //DIRB
 int myServo1Angle = 90, myServo2Angle = 60; // Initial camera position
 int myServo1Inc = 5, myServo2Inc = 20; // Camera scan angle increment
 boolean scan = false, fengmingqi = false, Back=false, Buzzer=false;
-
 void servo(int servopin,int myangle)//servo run
 {
     int pulsewidth=(myangle*11)+500;
@@ -192,5 +191,4 @@ void loop(){
     myServo1Angle += myServo1Inc;
     servo(servo1,myServo1Angle);   
   }
-  
 }
